@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+</head>
+<style>
+  /* Calculator styles */
+  :root {
+    --button-theme-color: #007bff; /* Default button theme color */
+    --calculator-theme-color: #fff; /* Default calculator theme color */
+  }
+
+  .calculator {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--calculator-theme-color); /* Apply calculator theme color */
+    resize: both;
+    overflow: auto;
+  }
+
+  #display {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    font-size: 20px;
+    background-color: #fff; /* Set display background color to white */
+  }
+
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  button {
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--button-theme-color); /* Apply button theme color */
+    color: #fff; /* Set button text color to white for better contrast */
+  }
+
+  button:hover {
+    background-color: #e0e0e0;
+  }
+
+  .theme-options {
+    margin-top: 10px;
+  }
+
+  .theme-options label {
+    font-weight: bold;
+  }
+
+  .theme-options input[type="color"] {
+    padding: 5px;
+  }
+</style>
+<body>
+  <div class="calculator" id="calculator">
+    <input type="text" id="display" readonly onclick="positionCursor()">
+    <div class="keys">
+      
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="deleteLastCharacter()">DEL</button>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('+')">+</button>
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('/')">/</button>
+      <button onclick="appendToDisplay('*')">*</button>
+      <button onclick="clearDisplay()" style="grid-column: span 2;">Reset</button>
+      <button onclick="calculate()" style="grid-column: span 2;">=</button>
+    </div>
+    <div class="theme-options">
+      <label for="button-theme-picker">Select Button Theme Color:</label>
+      <input type="color" id="button-theme-picker" onchange="changeButtonTheme()">
+      <p>
+      <label for="calculator-theme-picker">Select Background Theme Color:</label>
+      <input type="color" id="calculator-theme-picker" onchange="changeCalculatorTheme()">
+      </p>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      let savedButtonColor = localStorage.getItem('buttonThemeColor');
+      if (savedButtonColor) {
+        document.documentElement.style.setProperty('--button-theme-color', savedButtonColor);
+      }
+      let savedCalculatorColor = localStorage.getItem('calculatorThemeColor');
+      if (savedCalculatorColor) {
+        document.documentElement.style.setProperty('--calculator-theme-color', savedCalculatorColor);
+      }
+    };
+
+    let display = document.getElementById('display');
+
+    function appendToDisplay(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLastCharacter() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        let result = eval(display.value);
+        display.value = result;
+      } catch (error) {
+        display.value = 'Error';
+      }
+    }
+
+    function positionCursor() {
+      display.selectionStart = display.selectionEnd = display.value.length;
+    }
+
+    function changeButtonTheme() {
+      let buttonThemePicker = document.getElementById('button-theme-picker');
+      let selectedButtonColor = buttonThemePicker.value;
+      document.documentElement.style.setProperty('--button-theme-color', selectedButtonColor);
+      localStorage.setItem('buttonThemeColor', selectedButtonColor);
+    }
+
+    function changeCalculatorTheme() {
+      let calculatorThemePicker = document.getElementById('calculator-theme-picker');
+      let selectedCalculatorColor = calculatorThemePicker.value;
+      document.documentElement.style.setProperty('--calculator-theme-color', selectedCalculatorColor);
+      localStorage.setItem('calculatorThemeColor', selectedCalculatorColor);
+    }
+  </script>
+</body>
+</html>

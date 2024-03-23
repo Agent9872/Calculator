@@ -1,0 +1,63 @@
+
+    /* Calculator styles */
+    :root {
+      --button-theme-color: #007bff; /* Default button theme color */
+      --calculator-theme-color: #fff; /* Default calculator theme color */
+    }
+
+    .calculator {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      background-color: var(--calculator-theme-color); /* Apply calculator theme color */
+      resize: both;
+      overflow: auto;
+    }
+
+    #display {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      font-size: 20px;
+      background-color: #fff; /* Set display background color to white */
+    }
+
+    .keys {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: var(--button-theme-color); /* Apply button theme color */
+      color: #fff; /* Set button text color to white for better contrast */
+    }
+
+    button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .theme-options {
+      margin-top: 10px;
+    }
+
+    .theme-options label {
+      font-weight: bold;
+    }
+
+    .theme-options input[type="color"] {
+      padding: 5px;
+    }
